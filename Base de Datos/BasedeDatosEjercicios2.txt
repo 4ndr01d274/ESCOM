@@ -1,0 +1,14 @@
+Texto 1:
+Un determinado cliente puede tener en un momento dado varias reservaciones. De cada cliente se desea almacenar su rfc, nombre, direccion y
+telefono de contacto. Los clientes se identifican con un codigo unico, aparte los clientes pueden ser avalados por otro cliente de la 
+empresa, una reservacion la realiza un unico cliente pero involucra varios coches.
+Es importante registrar la fecha de la resevacion, el precio de alquiler de cada uno de los coches y el precio total de la reservacion.
+No se mantiene los datos de reservaciones anteriores.
+Todo coche tiene siempre asignado un cajon de estacionamiento. De cada coche se requiere la matricula, formada por el codigo del estado y 
+un numero de secuencia, el modelo, el color y la marca.
+Cada reservacion se realiza en una determinada agencia. 
+
+Texto 2:
+Habitantes y municipios: Cada persona solo puede habitar una vivienda y estar empadronada y registrada en un municipio, pero puede ser
+propietaria de varias viviendas. Cada vivienda esta hubicada en un municipio. Interesa tambien conocer a las personas que dependen del
+jefe de familia.

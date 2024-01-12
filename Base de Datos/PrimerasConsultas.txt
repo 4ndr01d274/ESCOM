@@ -1,0 +1,147 @@
+--consulta 1
+select "Nim Dep",count(*),avg("Salario")
+from "EMPLEADO"
+group by "Nim Dep";
+
+--consulta2
+select "NumP" , "NombreP" ,count(*) 
+from "PROYECTO","TRABAJA" 
+where ("NumeroP" = "NumP") 
+group by "NumP","NombreP";
+
+--consulta 3
+select count(*) from "EMPLEADO";
+
+--consulta 4
+select sum("Salario"), max("Salario"),min("Salario"),avg("Salario")
+from "EMPLEADO";
+
+--consulta 5	
+select "NumP","NumDep","ApellidoP","direccion" 
+from (("PROYECTO" join "DEPARTAMENTO" on "NumDep"="NumDepControl") join "EMPLEADO" on "NSSGte"="NSS")
+where "Lugar"='Zacatenco';
+
+--consula 6
+select "Nombre", "ApellidoP","direccion"
+from "EMPLEADO","DEPARTAMENTO"
+where "NombreDep"='Investigacion' and "NumDep"="Nim Dep";
+
+--consulta 7
+select "NSS" 
+from "EMPLEADO";
+
+--consulta 8 
+select "NSS", "NumDep"
+from "EMPLEADO","DEPARTAMENTO";
+
+--consulta 9
+select *
+from "EMPLEADO","DEPARTAMENTO";
+
+--consulta 10
+select distinct("Salario")
+from "EMPLEADO"
+
+--consulta 11
+select "NumeroP"
+from "EMPLEADO", "TRABAJA"
+where "ApellidoP" = 'Silva'  and "NSSem" ="NSS";
+
+--consulta 12 
+select "NumP"
+from "EMPLEADO", "DEPARTAMENTO" , "PROYECTO"
+where "ApellidoP" = 'Silva' and "NSSGte"="NSS" and "NumDep" = "NumDepControl";
+
+--consulta 13
+select "NumP"
+from "PROYECTO"
+where ("NumP" IN (select "NumP" 
+				from "PROYECTO", "DEPARTAMENTO", "EMPLEADO"
+				where "Nim Dep"="NumDep" and "NSSGte"="NSS" and "ApellidoP"='Silva'
+				)or 
+		"NumP" IN (select "NumeroP"
+				  from "TRABAJA","EMPLEADO"
+				  where "NSSem" ="NSS" and "ApellidoP" ='Silva'))
+
+--consulta 14
+select distinct("NSSem")
+from "TRABAJA"
+where ("NumeroP","Horas") IN (select "NumeroP" ,"Horas"
+							 from "TRABAJA"
+							 where "NSSem"='1') ;
+--consulta 15
+select distinct("NSSem")
+from "TRABAJA"
+where "NumeroP" IN ('1','2','3');
+
+--consulta 16
+select "Nombre","ApellidoP"
+from "EMPLEADO"
+where NOT EXISTS (select *
+				 from "DEPENDIENTE"
+				 where "NSS"="NSSE");
+				 
+--consulta 17
+select "Nombre","ApellidoP"
+from "EMPLEADO"
+where "NSS sup" is null; 
+
+--consulta 18
+select "E"."ApellidoP" as "AP_emp", "S"."ApellidoP" as "ap_SUP"
+from "EMPLEADO" as "E", "EMPLEADO" as "S"
+where "E"."NSS sup" = "S"."NSS";
+
+--consulta 19
+select "Nombre","ApellidoP","direccion"
+from ("EMPLEADO" join "DEPARTAMENTO" on "Nim Dep"="NumDep")
+where "NombreDep" ='Investigacion';
+
+--consulta 20 
+select "Nombre","ApellidoP","direccion" ,"Depto"."NombreDep", "Depto"."NumDep", "Depto"."NSSGte" 
+from "EMPLEADO" natural join "DEPARTAMENTO" as "Depto" 
+where "NombreDep" ='Investigacion';
+
+--consulta 21
+select "NumeroP","NombreP",count(*)
+from "PROYECTO", "TRABAJA"
+where "NumeroP" = "NumP"
+group by "NumeroP", "NombreP"
+having count(*)>2;
+
+--consulta 22
+select "Nombre","ApellidoP"
+from "EMPLEADO"
+where "direccion" like 'Lindavista'
+
+--consulta 23
+select "Nombre", "ApellidoP"
+from "EMPLEADO"
+where "Fnac" like '199_';
+
+--consulta 24
+select "Nombre","ApellidoP", 1.1 * "Salario"
+from "EMPLEADO"
+where NOT EXISTS (select *
+				 from "DEPENDIENTE"
+				 where "NSS"="NSSE");
+
+--consulta 25
+select "NombreDep","ApellidoP","Nombre","NombreP"
+from "DEPARTAMENTO","EMPLEADO","TRABAJA","PROYECTO"
+where "NumDep"="Nim Dep" and "NSS"="NSSem" and "NumP"="NumeroP"
+order by "NombreDep","ApellidoP";
+
+--consulta 26 
+create view "TRABAJA1"
+as select "Nombre" ,"ApellidoP","NombreP","Horas"
+from "EMPLEADO","PROYECTO","TRABAJA"
+where "NSS"="NSSem" and "NumP"="NumeroP";
+
+--consulta 27
+create view "INFO_DEPTO" ("Nombre_Depto","numEmps","SalTotal")
+		as select "NombreDep",count(*), sum("Salario")
+from "DEPARTAMENTO", "EMPLEADO"
+where "NumDep"="Nim Dep"
+group by "NombreDep";
+
+
